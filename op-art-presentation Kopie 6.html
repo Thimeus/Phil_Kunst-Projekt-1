@@ -132,6 +132,36 @@
             transform: scale(1.05);
         }
 
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .banner-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .banner-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer-text {
+            font-size: 1.2rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
         @keyframes slideUp {
             to {
                 transform: translateY(0);
@@ -162,36 +192,6 @@
                 grid-template-columns: 1fr;
             }
         }
-
-        .footer {
-            margin-top: 4rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-        }
-
-        .banner-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .banner-image {
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .footer-text {
-            font-size: 1.2rem;
-            text-align: center;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
     </style>
 </head>
 <body>
@@ -205,10 +205,10 @@
             <p>Op-Art, kurz für Optical Art, ist eine Kunstrichtung, die mit visuellen Effekten und optischen Täuschungen arbeitet. Sie verwendet Muster, Farben und Formen, um beim Betrachter den Eindruck von Bewegung, Tiefe oder Vibration zu erzeugen.</p>
             
             <div class="gallery">
-                <img src="https://raw.githubusercontent.com/Thimeus/Phil-op-art-1/main/op-art%201.png" alt="Op-Art Beispiel 1">
-                <img src="https://raw.githubusercontent.com/Thimeus/Phil-op-art-1/main/op-art%202.png" alt="Op-Art Beispiel 2">
-                <img src="https://raw.githubusercontent.com/Thimeus/Phil-op-art-1/main/Bild%201.png" alt="Op-Art Beispiel 3">
-                <img src="https://raw.githubusercontent.com/Thimeus/Phil-op-art-1/main/Bild%204.png" alt="Op-Art Beispiel 4">
+                <img src="./op-art-1.png" alt="Op-Art Beispiel 1">
+                <img src="./op-art-2.png" alt="Op-Art Beispiel 2">
+                <img src="./bild-1.png" alt="Op-Art Beispiel 3">
+                <img src="./bild-4.png" alt="Op-Art Beispiel 4">
             </div>
         </section>
 
@@ -237,8 +237,7 @@
             <h2>Code & Erklärungen</h2>
             <div class="code-block">
                 <h3>Würfel 1 - Grundlegender Code</h3>
-                <pre><code>
-function setup() {
+                <pre><code>function setup() {
     createCanvas(400, 400, WEBGL);
 }
 
@@ -305,8 +304,7 @@ function draw() {
 
             <div class="code-block">
                 <h3>Würfel 2 - Erweiterter Code</h3>
-                <pre><code>
-function setup() {
+                <pre><code>function setup() {
     createCanvas(1000, 1000, WEBGL);
     angleMode(DEGREES);
 }
@@ -378,17 +376,17 @@ function draw() {
 
     <footer class="footer">
         <div class="banner-container">
-            <img src="https://raw.githubusercontent.com/Thimeus/Phil-op-art-1/main/banner.png" alt="Banner" class="banner-image">
+            <img src="./banner.png" alt="Banner" class="banner-image">
             <p class="footer-text">Phil Scheller / KUNST / Klasse 7d | Johan-Gutenberg-Schule Bremerhaven</p>
         </div>
     </footer>
 
     <script>
-        // Original p5.js sketches
+        <script>
         // Separate Sketches für jeden Würfel
-let sketch1, sketch2, sketch3;
+        let sketch1, sketch2, sketch3;
 
-const s = (p) => {
+        const s = (p) => {
             let canvas;
             p.setup = function() {
                 // Erstelle Canvas mit der Größe des Containers
@@ -409,13 +407,15 @@ const s = (p) => {
                 p.rotateX(p.frameCount * 0.01);
                 p.rotateY(p.frameCount * 0.01);
                 
-                p.box(100);
+                p.box(p.width/3);
             }
         };
 
         const t = (p) => {
+            let canvas;
             p.setup = function() {
-                p.createCanvas(300, 300, p.WEBGL);
+                let container = document.getElementById('canvas-container-2');
+                canvas = p.createCanvas(container.offsetWidth, container.offsetWidth, p.WEBGL);
                 p.angleMode(p.DEGREES);
             }
             
@@ -444,15 +444,15 @@ const s = (p) => {
                     let scaleFactor = 1 + p.sin(p.frameCount*0.5 + i*30)*0.2;
                     p.scale(scaleFactor);
                     
-                    p.box(250 + i*30);
+                    p.box(p.width/2 + i*30);
                     p.pop();
                 }
             }
         };
 
         const u = (p) => {
+            let canvas;
             p.setup = function() {
-                // Erstelle Canvas mit der Größe des Containers
                 let container = document.getElementById('canvas-container-3');
                 canvas = p.createCanvas(container.offsetWidth, container.offsetWidth, p.WEBGL);
                 p.angleMode(p.DEGREES);
@@ -463,7 +463,7 @@ const s = (p) => {
                 p.orbitControl();
                 p.lights();
                 
-                let cubeSize = p.width / 2; // Größe an Container anpassen
+                let cubeSize = p.width / 2;
                 let rotationSpeed = 0.01;
                 
                 p.rotateX(p.frameCount * rotationSpeed);
@@ -577,14 +577,14 @@ const s = (p) => {
         };
 
         // Warte bis das DOM geladen ist
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialisiere die Sketches und binde sie an die Container
-    sketch1 = new p5(s, 'canvas-container-1');
-    sketch2 = new p5(t, 'canvas-container-2');
-    sketch3 = new p5(u, 'canvas-container-3');
-});
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialisiere die Sketches und binde sie an die Container
+            sketch1 = new p5(s, 'canvas-container-1');
+            sketch2 = new p5(t, 'canvas-container-2');
+            sketch3 = new p5(u, 'canvas-container-3');
+        });
 
-        // Intersection Observer for animation
+        // Intersection Observer für Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
